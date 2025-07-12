@@ -4,6 +4,7 @@
     <div>
       {% if request.user.is_authenticated %}
       <p>Welcome {{request.user.username }}</p>
+      <a href="/user/{{ request.user.username }}">See messages left</a>  <!-- Remove '{{ request.user.username }}' -->
       <form action='/logout/' method="POST">
         {% csrf_token %}
         <input type="submit" value="Logout"/>
