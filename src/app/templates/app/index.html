@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
   <body>
-    {% if request.user.is_authenticated %}
-    <p>Welcome {{request.user.username }}</p>
-    <form action='logout/' method="POST">
-			{% csrf_token %}
-      <input type="submit" value="Logout"/>
-    </form>
-    {% else %}
-    <a href="login/">Login</a>
-    <a href="register/">Register</a>
-    {% endif %}
-    <hr />
+    <div>
+      {% if request.user.is_authenticated %}
+      <p>Welcome {{request.user.username }}</p>
+      <form action='/logout/' method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout"/>
+      </form>
+      {% else %}
+      <a href="/login/">Login</a>
+      <a href="/register/">Register</a>
+      {% endif %}
+      <hr />
+    </div>
+    <div>
+      <a href="/message/">New message</a>
+      <hr />
+    </div>
+    <div>
+      {% for message in messages %}
+      <div>
+        <p>
+          {{ message.owner.user.username }}: {{ message.content | safe }}  <!-- Remove the safe filter -->
+        </p>
+      </div>
+      {% empty %}
+      <p>No messages</p>
+      {% endfor %}
+    </div>
   </body>
 </html>
