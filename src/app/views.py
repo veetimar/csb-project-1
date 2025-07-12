@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
+from django.db.utils import IntegrityError
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -47,7 +48,10 @@ def register(request):
             #     validate_password(password=password)
             # except ValidationError as e:
             #     return HttpResponseForbidden(e)
-            user = User.objects.create_user(username=username, password=password)
+            try:
+                user = User.objects.create_user(username=username, password=password)
+            except IntegrityError:
+                return HttpResponseForbidden("Username already taken")
             account = Account(user=user)
             account.save()
             login(request, user)
