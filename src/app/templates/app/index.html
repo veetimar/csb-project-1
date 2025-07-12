@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h1>Index page</h1>
+    {% if request.user.is_authenticated %}
+    <p>Welcome {{request.user.username }}</p>
+    <form action='logout/' method="POST">
+			{% csrf_token %}
+      <input type="submit" value="Logout"/>
+    </form>
+    {% else %}
+    <a href="login/">Login</a>
+    <a href="register/">Register</a>
+    {% endif %}
+    <hr />
   </body>
 </html>
