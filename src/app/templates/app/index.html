@@ -3,11 +3,13 @@
   <body>
     <div>
       {% if request.user.is_authenticated %}
-      <p>Welcome {{request.user.username }}</p>
+      <p>
+        Welcome {{request.user.username }}
+      </p>
       <a href="/user/{{ request.user.username }}">See messages left</a>  <!-- Remove '{{ request.user.username }}' -->
       <form action='/logout/' method="POST">
         {% csrf_token %}
-        <input type="submit" value="Logout"/>
+        <input type="submit" value="Logout" />
       </form>
       {% else %}
       <a href="/login/">Login</a>
@@ -27,7 +29,9 @@
         </p>
       </div>
       {% empty %}
-      <p>No messages</p>
+      <p>
+        No messages
+      </p>
       {% endfor %}
     </div>
   </body>
