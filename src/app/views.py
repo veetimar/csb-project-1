@@ -59,6 +59,7 @@ def register(request):
         else:
             return HttpResponseForbidden("Form data not valid")
 
+# @login_required
 def user(request, username):  # remove the username parameter
     account = Account.objects.get(user__username=username)  # replace with '.get(user=request.user)'
     return render(request, "app/user.html", {"account": account})
